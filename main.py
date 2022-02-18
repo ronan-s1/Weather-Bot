@@ -8,8 +8,8 @@ import random
 from keep_alive import keep_alive
 
 #reads facts.txt and returns a list
-def facts():
-	my_file = open("facts.txt", "r")
+def facts(f):
+	my_file = open(f, "r")
 	content = my_file.read()
 	content_list = content.split("\n")
 	my_file.close()
@@ -29,7 +29,7 @@ def getting_weather():
 
 
 def commands():
-	commands = ["!commands - brings this up", "!weather - gets current weather of Dublin","!fact - shows a fun weather fact"]
+	commands = ["**!commands** - brings this up", "**!weather** - gets current weather of Dublin","**!fact** - shows a fun weather fact", "**!gifs** - shows a weather gif"]
 	result = ""
 	for command in commands:
 		result += command + "\n"
@@ -53,8 +53,9 @@ async def daily_weather():
 		await asyncio.sleep(wait_time)
 
 		if wait_time == 0:
-			channel = client.get_channel(944207098043039784)
-			await channel.send(getting_weather())
+			channel = client.get_channel(893033706107858945)
+			daily_message = "**DAILY UPDATE:**\n" + getting_weather()
+			await channel.send(daily_message)
 			wait_time = 1
 
 
@@ -76,13 +77,20 @@ async def on_message(message):
 	if msg.startswith("!weather"):
 		await message.channel.send(getting_weather())
 	
-	if msg.startswith("!commands"):
+	#shows list of commands
+	elif msg.startswith("!commands"):
 		await message.channel.send(commands())
 
-	if msg.startswith("!fact"):
-		await message.channel.send(facts())
+	#shows fact
+	elif msg.startswith("!fact"):
+		await message.channel.send(facts("facts.txt"))
+	
+	#shows gif
+	elif msg.startswith("!gif"):
+		await message.channel.send(facts("gifs.txt"))
 
 
+#starting the bot
 bot_token = os.environ["TOKEN"]
 keep_alive()
 client.run(bot_token)
