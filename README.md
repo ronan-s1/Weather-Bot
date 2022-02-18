@@ -1,5 +1,6 @@
 # Weather-Bot
 Shows the weather of the Dublin daily, and more!
+
 do !commands to see what the bot can do
 
 # Link to use
