@@ -8,7 +8,7 @@ import random
 from keep_alive import keep_alive
 
 #reads facts.txt and returns a list
-def facts(f):
+def facts_and_gif(f):
 	my_file = open(f, "r")
 	content = my_file.read()
 	content_list = content.split("\n")
@@ -28,8 +28,26 @@ def getting_weather():
 	return f"**{title}**\n{description}"
 
 
+# gets tomorrow's weather
+def tomorrow():
+	page = requests.get("https://www.met.ie/forecasts/dublin")
+	soup = BeautifulSoup(page.content, "html.parser")
+
+	title = soup.select("h2")[0].text
+
+	for count, i in enumerate(soup.select("h2")):
+		if "TOMORROW" in i.text:
+			title = i.text
+			break
+
+	description = soup.select("p")[3 + count].text
+
+	return f"**{title}**\n{description}"
+
+
+
 def commands():
-	commands = ["**!commands** - brings this up", "**!weather** - gets current weather of Dublin","**!fact** - shows a fun weather fact", "**!gifs** - shows a weather gif"]
+	commands = ["**!commands** - shows list of commands (this)", "**!weather** - shows the current weather of Dublin", "**!tmr** - shows the weather for tomorrow in Dublin","**!fact** - shows a fun weather fact", "**!gifs** - shows a weather gif"]
 	result = ""
 	for command in commands:
 		result += command + "\n"
@@ -74,7 +92,7 @@ async def on_message(message):
 		return
 
 	#send weather
-	if msg.startswith("!weather"):
+	elif msg.startswith("!weather"):
 		await message.channel.send(getting_weather())
 	
 	#shows list of commands
@@ -83,11 +101,15 @@ async def on_message(message):
 
 	#shows fact
 	elif msg.startswith("!fact"):
-		await message.channel.send(facts("facts.txt"))
+		await message.channel.send(facts_and_gif("facts.txt"))
 	
 	#shows gif
 	elif msg.startswith("!gif"):
-		await message.channel.send(facts("gifs.txt"))
+		await message.channel.send(facts_and_gif("gifs.txt"))
+	
+	#send tomorrow's weather
+	elif msg.startswith("!tmr"):
+		await message.channel.send(tomorrow())
 
 
 #starting the bot
