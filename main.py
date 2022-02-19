@@ -60,15 +60,14 @@ def news():
 		# removes evrything after &sa=U&, making the link useable
 		link = "<" + (raw_link.split("/url?q=")[1]).split("&sa=U&")[0] + ">"
 
-		print(link)
 		news_list.append(link)
 	
 	return news_list
 
 
-
+# shows list of commands
 def commands():
-	commands = ["**!commands** - shows list of commands (this)", "**!weather** - shows the current weather of Dublin", "**!tmr** - shows the weather for tomorrow in Dublin","**!news** - shows weather related articles in Ireland","**!fact** - shows a fun weather fact", "**!gifs** - shows a weather gif"]
+	commands = ["**!commands** - shows list of commands (this)", "**!weather** - shows the current weather of Dublin", "**!tmr** - shows the weather for tomorrow in Dublin","**!news** - shows weather related articles in Ireland","**!fact** - shows a fun weather fact", "**!gif** - shows a weather gif"]
 	result = ""
 	for command in commands:
 		result += command + "\n"
@@ -137,8 +136,8 @@ async def on_message(message):
 		articles = news()
 		articles = [link for i, link in enumerate(articles) if i % 2 == 1]
 		count = 0
-		await message.channel.send("**Weather Related News Articles:**\n")
-		
+		await message.channel.send("**Weather Related News Articles: (be patient)**\n")
+
 		#sending links
 		for link in articles:
 			await message.channel.send(link)
@@ -154,7 +153,7 @@ async def on_message(message):
 				def check(msg):
 					return msg.author == message.author and msg.channel == message.channel and \
 					msg.content.lower() in ["y", "n", "no", "yes"]
-				
+
 				#user input
 				try:
 					user_msg = await client.wait_for("message", check=check, timeout = 15.0)
@@ -173,7 +172,6 @@ async def on_message(message):
 
 		#when all articles are sent
 		await message.channel.send("**No More Articles**\n")
-				
 
 
 #starting the bot
