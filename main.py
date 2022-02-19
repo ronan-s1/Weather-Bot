@@ -63,6 +63,10 @@ async def on_message(message):
 		await message.channel.send(commands.tomorrow())
 	
 	#send tomorrow's weather
+	elif msg.startswith("!jacket"):
+		await message.channel.send(commands.jacket())
+	
+	#send tomorrow's weather
 	elif msg.startswith("!news"):
 		#calling news function to get articles
 		articles = commands.news()
