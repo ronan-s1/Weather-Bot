@@ -7,6 +7,7 @@ import datetime
 import random
 from keep_alive import keep_alive
 
+
 #reads facts.txt and returns a list
 def facts_and_gif(f):
 	my_file = open(f, "r")
@@ -33,8 +34,6 @@ def tomorrow():
 	page = requests.get("https://www.met.ie/forecasts/dublin")
 	soup = BeautifulSoup(page.content, "html.parser")
 
-	title = soup.select("h2")[0].text
-
 	for count, i in enumerate(soup.select("h2")):
 		if "TOMORROW" in i.text:
 			title = i.text
@@ -45,9 +44,31 @@ def tomorrow():
 	return f"**{title}**\n{description}"
 
 
+# links to articles
+def news():
+	# news_string = "**Weather Related News:**\n"
+	news_list = []
+	page = requests.get("https://www.google.com/search?q=weather+ireland&rlz=1C1ONGR_en-GBIE979IE979&biw=1536&bih=842&tbm=nws&sxsrf=APq-WBsl_-eeWzTn7FGhUDdCzlFHF_pROg%3A1645226936889&ei=uCsQYubSNePA8gLQq7TABg&ved=0ahUKEwjmjpf5s4r2AhVjoFwKHdAVDWgQ4dUDCA0&uact=5&oq=weather+ireland&gs_lcp=Cgxnd3Mtd2l6LW5ld3MQAzIKCAAQsQMQgwEQQzILCAAQsQMQgwEQkQIyCwgAELEDEIMBEJECMgsIABCxAxCDARCRAjILCAAQgAQQsQMQgwEyCwgAEIAEELEDEIMBMgsIABCABBCxAxCDATIICAAQsQMQgwEyCwgAEIAEELEDEIMBMgsIABCABBCxAxCDAVAAWMwRYJwTaABwAHgAgAHSAYgBxQiSAQYxNC4wLjGYAQCgAQHAAQE&sclient=gws-wiz-news")
+
+	soup = BeautifulSoup(page.content, "html.parser")
+
+	# finds all classes with kCrYT
+	for item in soup.find_all("div", attrs={"class" : "kCrYT"}):
+		# gets the links only
+		raw_link = (item.find("a", href=True)["href"])
+
+		# removes evrything after &sa=U&, making the link useable
+		link = "<" + (raw_link.split("/url?q=")[1]).split("&sa=U&")[0] + ">"
+
+		print(link)
+		news_list.append(link)
+	
+	return news_list
+
+
 
 def commands():
-	commands = ["**!commands** - shows list of commands (this)", "**!weather** - shows the current weather of Dublin", "**!tmr** - shows the weather for tomorrow in Dublin","**!fact** - shows a fun weather fact", "**!gifs** - shows a weather gif"]
+	commands = ["**!commands** - shows list of commands (this)", "**!weather** - shows the current weather of Dublin", "**!tmr** - shows the weather for tomorrow in Dublin","**!news** - shows weather related articles in Ireland","**!fact** - shows a fun weather fact", "**!gifs** - shows a weather gif"]
 	result = ""
 	for command in commands:
 		result += command + "\n"
@@ -57,7 +78,6 @@ def commands():
 
 # --- discord side ---
 client = discord.Client()
-
 
 #send the weather at 7am
 @client.event
@@ -87,7 +107,7 @@ async def on_ready():
 #if user does a command
 @client.event
 async def on_message(message):
-	msg = message.content
+	msg = message.content.lower()
 	if message.author == client.user:
 		return
 
@@ -110,6 +130,50 @@ async def on_message(message):
 	#send tomorrow's weather
 	elif msg.startswith("!tmr"):
 		await message.channel.send(tomorrow())
+	
+	#send tomorrow's weather
+	elif msg.startswith("!news"):
+		#calling news function to get articles
+		articles = news()
+		articles = [link for i, link in enumerate(articles) if i % 2 == 1]
+		count = 0
+		await message.channel.send("**Weather Related News Articles:**\n")
+		
+		#sending links
+		for link in articles:
+			await message.channel.send(link)
+
+			count += 1
+
+			#sending 2 links per time so channel doesn't get spammed
+			if count == 2:
+				count = 0
+				await message.channel.send("**Enter 'y' for more articles, else enter 'n'**\n")
+
+				#input validation
+				def check(msg):
+					return msg.author == message.author and msg.channel == message.channel and \
+					msg.content.lower() in ["y", "n", "no", "yes"]
+				
+				#user input
+				try:
+					user_msg = await client.wait_for("message", check=check, timeout = 15.0)
+
+				#if user doesnt have any valid reply
+				except asyncio.TimeoutError: 
+					await message.channel.send(f"**Error: {message.author}, you didn't send a valid reply in 15 seconds!**")
+					return
+
+				#send more articles if user wants more else leave then loop
+				if user_msg.content.lower() in ["y", "yes"]:
+					await message.channel.send("**More Articles:**\n")
+
+				else:
+					break
+
+		#when all articles are sent
+		await message.channel.send("**No More Articles**\n")
+				
 
 
 #starting the bot
