@@ -3,6 +3,16 @@ from bs4 import BeautifulSoup
 import random
 
 
+# shows list of commands
+def commands():
+	commands = ["**!commands** - shows list of commands (this)", "**!weather** - shows the current weather of Dublin", "**!tmr** - shows the weather for tomorrow in Dublin","**!news** - shows weather related articles in Ireland","**!fact** - shows a fun weather fact", "**!gif** - shows a weather gif", "**!jacket** - says if you should wear a jacket or not"]
+	result = ""
+	for command in commands:
+		result += command + "\n"
+
+	return result
+
+
 #reads facts.txt and returns a list
 def facts_and_gif(f):
 	my_file = open(f, "r")
@@ -60,11 +70,17 @@ def news():
 	return news_list
 
 
-# shows list of commands
-def commands():
-	commands = ["**!commands** - shows list of commands (this)", "**!weather** - shows the current weather of Dublin", "**!tmr** - shows the weather for tomorrow in Dublin","**!news** - shows weather related articles in Ireland","**!fact** - shows a fun weather fact", "**!gif** - shows a weather gif"]
-	result = ""
-	for command in commands:
-		result += command + "\n"
+def jacket():
+	page = requests.get("https://doineedajacket.com/weather/dublin")
+	soup = BeautifulSoup(page.content, "html.parser")
 
-	return result
+	# getting data
+	jacket_ans = soup.select("h1")[0].text
+	return_string = f"Weather Bot says **{jacket_ans}!**\n"
+
+	hours_later = soup.select("h4")
+	for i in range(1, len(hours_later) - 1):
+		return_string += hours_later[i].text + "\n"
+
+	return return_string
+	
