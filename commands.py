@@ -76,7 +76,12 @@ def jacket():
 
 	# getting data
 	jacket_ans = soup.select("h1")[0].text
-	return_string = f"Weather Bot says **{jacket_ans}!**\n"
+
+	if jacket_ans.lower() == "yes":
+		return_string = f"**{jacket_ans}!** You should wear a jacket.\n"
+	
+	else:
+		return_string = f"**{jacket_ans}!** You shouldn't wear a jacket.\n"
 
 	hours_later = soup.select("h4")
 	for i in range(1, len(hours_later) - 1):
