@@ -7,8 +7,8 @@ import random
 def commands():
 	commands = ["**!commands** - shows list of commands (this)", "**!weather** - shows the current weather of Dublin", "**!tmr** - shows the weather for tomorrow in Dublin","**!news** - shows weather related articles in Ireland","**!fact** - shows a fun weather fact", "**!gif** - shows a weather gif", "**!jacket** - says if you should wear a jacket or not"]
 	result = ""
-	for command in commands:
-		result += command + "\n"
+	for count, command in enumerate(commands):
+		result += f"**{count + 1})** {command}\n"
 
 	return result
 
