@@ -35,7 +35,6 @@ def hourly():
         rows.append(row)
     
     #cleaning up rows
-    leave = False
     rows[2][0] = rows[2][0].split("m")[0] + "m"
 
     for i in range(2, len(rows) - 1):               
