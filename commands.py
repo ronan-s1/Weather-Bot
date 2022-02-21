@@ -37,10 +37,8 @@ def hourly():
     #cleaning up rows
     leave = False
     rows[2][0] = rows[2][0].split("m")[0] + "m"
-    for i in range(2, len(rows) - 1):
-        if leave == True:
-            break
-               
+
+    for i in range(2, len(rows) - 1):               
         rows[i].pop(len(rows[i]) -1)
         rows[i].pop(1)
         rows[i].pop(5)
@@ -53,7 +51,7 @@ def hourly():
         table.add_row(rows[i])
 
         if rows[i][0] == "11:00 pm":
-            leave = True
+            break
     
     #return the table
     table.align = "l"
