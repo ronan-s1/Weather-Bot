@@ -1,16 +1,64 @@
 import requests
 from bs4 import BeautifulSoup
 import random
-
+from prettytable import PrettyTable
+from prettytable import SINGLE_BORDER
 
 # shows list of commands
 def commands():
-	commands = ["**!commands** - shows list of commands (this)", "**!weather** - shows the current weather of Dublin", "**!tmr** - shows the weather for tomorrow in Dublin","**!news** - shows weather related articles in Ireland","**!fact** - shows a fun weather fact", "**!gif** - shows a weather gif", "**!jacket** - says if you should wear a jacket or not"]
+	commands = ["**!commands** - shows list of commands (this)", "**!weather** - shows a description the current weather of Dublin", "**!tmr** - shows the weather for tomorrow in Dublin", "**!hourly** - shows today's weather hourly in Dublin","**!news** - shows weather related articles in Ireland","**!fact** - shows a fun weather fact", "**!gif** - shows a weather gif", "**!jacket** - says if you should wear a jacket or not"]
 	result = ""
 	for count, command in enumerate(commands):
 		result += f"**{count + 1})** {command}\n"
 
 	return result
+
+
+# displays hourly weather
+def hourly():
+    #pretty table to display a pretty table :)
+    table = PrettyTable()
+    table.field_names = ["TIME", "WEATHER", "WIND km/h", "HUMID", "RAIN CHANCE"]
+    page = requests.get("https://www.timeanddate.com/weather/ireland/dublin/hourly")
+    soup = BeautifulSoup(page.text, "html.parser")
+    table_scrape = soup.find_all("tr")
+
+    # rows of data
+    rows = []
+
+    #getting rows into table into lists
+    for data in table_scrape:
+        row = []
+        for items in data:
+            row.append(items.text)
+
+        rows.append(row)
+    
+    #cleaning up rows
+    leave = False
+    rows[2][0] = rows[2][0].split("m")[0] + "m"
+    for i in range(2, len(rows) - 1):
+        if leave == True:
+            break
+               
+        rows[i].pop(len(rows[i]) -1)
+        rows[i].pop(1)
+        rows[i].pop(5)
+        rows[i].pop(1)
+        rows[i].pop(2)
+
+        # mph to kph
+        rows[i][2] = str(round(int(rows[i][2].split(" ")[0]) / 0.6214))
+
+        table.add_row(rows[i])
+
+        if rows[i][0] == "11:00 pm":
+            leave = True
+    
+    #return the table
+    table.align = "l"
+    table.set_style(SINGLE_BORDER)
+    return f"```\n{table}\n```"
 
 
 #reads facts.txt and returns a list
