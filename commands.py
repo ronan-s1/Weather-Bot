@@ -37,6 +37,7 @@ def hourly():
     #cleaning up rows
     rows[2][0] = rows[2][0].split("m")[0] + "m"
 
+    count = 0
     for i in range(2, len(rows) - 1):               
         rows[i].pop(len(rows[i]) -1)
         rows[i].pop(1)
@@ -49,7 +50,8 @@ def hourly():
 
         table.add_row(rows[i])
 
-        if rows[i][0] == "11:00 pm":
+        count += 1
+        if rows[i][0] == "11:00 pm" or count >= 15:
             break
     
     #return the table
