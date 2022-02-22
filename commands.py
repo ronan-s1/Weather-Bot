@@ -6,12 +6,29 @@ from prettytable import SINGLE_BORDER
 
 # shows list of commands
 def commands():
-	commands = ["**!commands** - shows list of commands (this)", "**!weather** - shows a description of the current weather of Dublin", "**!tmr** - shows the weather for tomorrow in Dublin", "**!hourly** - shows today's weather hourly in Dublin","**!news** - shows weather related articles in Ireland","**!fact** - shows a fun weather fact", "**!gif** - shows a weather gif", "**!jacket** - says if you should wear a jacket or not"]
+	commands = ["**!commands** - shows list of commands (this)", "**!weather** - shows a description of the current weather of Dublin", "**!tmr** - shows the weather for tomorrow in Dublin", "**!hourly** - shows today's weather hourly in Dublin","**!news** - shows weather related articles in Ireland","**!fact** - shows a fun weather fact", "**!gif** - shows a weather gif", "**!jacket** - says if you should wear a jacket or not", "**!wordle - Shows the wordle answer for today**"]
 	result = ""
 	for count, command in enumerate(commands):
 		result += f"**{count + 1})** {command}\n"
 
 	return result
+
+
+# wordle answer
+def wordle():
+    page = requests.get("https://gamerjournalist.com/wordle-answers/")
+    soup = BeautifulSoup(page.text, "html.parser")
+
+    #getting correct string
+    string  =  soup.find_all("p")[2].text.split(" ")
+    wordle = ""
+    for i in range(len(string) - 1):
+        wordle += string[i] + " "
+
+    #spoiler
+    ans =  wordle + "||" + str(string[-1]) + "||"
+
+    return ans
 
 
 # displays hourly weather
