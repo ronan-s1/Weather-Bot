@@ -52,7 +52,7 @@ def hourly():
         rows.append(row)
     
     #cleaning up rows
-    rows[2][0] = rows[2][0].split("m")[0] + "m"
+   
 
     count = 0
     for i in range(2, len(rows) - 1):               
@@ -62,13 +62,15 @@ def hourly():
         rows[i].pop(1)
         rows[i].pop(2)
 
+        rows[i][0] = rows[i][0].split("m")[0] + "m"
+
         # mph to kph
         rows[i][2] = str(round(int(rows[i][2].split(" ")[0]) / 0.6214))
 
         table.add_row(rows[i])
 
         count += 1
-        if rows[i][0] == "11:00 pm" or count >= 15:
+        if count >= 15:
             break
     
     #return the table
