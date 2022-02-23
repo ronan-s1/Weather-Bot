@@ -26,6 +26,29 @@ def commands():
     return f"{result}"
 
 
+#finds ip
+def ip(ip):
+    #gets infor of ip
+    response = requests.get("http://ip-api.com/json/" + ip).json()
+    info = PrettyTable()
+    info.field_names =["FIELDS", "DATA"]
+
+
+    data_fields = ["country", "country code", "region name", "city", "zip", "latitude", "longitude", "timezone", "ISP", "AS", "IP"]
+    data = ["country", "countryCode", "regionName", "city", "zip", "lat", "lon", "timezone", "isp", "as", "query"]
+
+    #put info into a table if the ip is valid else display an error
+    if response["status"] == "success":
+        for i in range(len(data)):
+            info.add_row([data_fields[i], response[data[i]]])
+
+        info.align = "l"
+        info.set_style(SINGLE_BORDER)
+        return f"```\n{info}```"
+    
+    return "**invalid IP**"
+
+
 #wordle answer
 def wordle():
     page = requests.get("https://gamerjournalist.com/wordle-answers/")
