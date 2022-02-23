@@ -4,17 +4,29 @@ import random
 from prettytable import PrettyTable
 from prettytable import SINGLE_BORDER
 
-# shows list of commands
+
+#shows list of commands
 def commands():
-	commands = ["**!commands** - shows list of commands (this)", "**!weather** - shows a description of the current weather of Dublin", "**!tmr** - shows the weather for tomorrow in Dublin", "**!hourly** - shows today's weather hourly in Dublin","**!news** - shows weather related articles in Ireland","**!fact** - shows a fun weather fact", "**!gif** - shows a weather gif", "**!jacket** - says if you should wear a jacket or not", "**!wordle** - Shows the wordle answer for today"]
-	result = ""
-	for count, command in enumerate(commands):
-		result += f"**{count + 1})** {command}\n"
+    f = "other/commands.txt"
+    my_file = open(f, "r")
+    commands = my_file.read()
+    commands_list = commands.split("\n")
+    my_file.close()
+    
+    result = ""
+    for count, command in enumerate(commands_list):
 
-	return result
+        if command[2] == "!":
+            result += f"**{count + 1})** {command}\n"
+
+        else:
+            result += f"\n{command}\n"
+
+    
+    return f"{result}"
 
 
-# wordle answer
+#wordle answer
 def wordle():
     page = requests.get("https://gamerjournalist.com/wordle-answers/")
     soup = BeautifulSoup(page.text, "html.parser")
@@ -31,7 +43,7 @@ def wordle():
     return ans
 
 
-# displays hourly weather
+#displays hourly weather
 def hourly():
     #pretty table to display a pretty table :)
     table = PrettyTable()
@@ -40,7 +52,7 @@ def hourly():
     soup = BeautifulSoup(page.text, "html.parser")
     table_scrape = soup.find_all("tr")
 
-    # rows of data
+    #rows of data
     rows = []
 
     #getting rows into table into lists
@@ -52,8 +64,6 @@ def hourly():
         rows.append(row)
     
     #cleaning up rows
-   
-
     count = 0
     for i in range(2, len(rows) - 1):               
         rows[i].pop(len(rows[i]) -1)
@@ -64,7 +74,7 @@ def hourly():
 
         rows[i][0] = rows[i][0].split("m")[0] + "m"
 
-        # mph to kph
+        #mph to kph
         rows[i][2] = str(round(int(rows[i][2].split(" ")[0]) / 0.6214))
 
         table.add_row(rows[i])
@@ -89,7 +99,7 @@ def facts_and_gif(f):
 	return random.choice(content_list)
 
 
-# scrapes the met.ie webpage for todays weather
+#scrapes the met.ie webpage for todays weather
 def getting_weather():
 	page = requests.get("https://www.met.ie/forecasts/dublin")
 	soup = BeautifulSoup(page.content, "html.parser")
@@ -100,7 +110,7 @@ def getting_weather():
 	return f"**{title}**\n{description}"
 
 
-# gets tomorrow's weather
+#gets tomorrow's weather
 def tomorrow():
 	page = requests.get("https://www.met.ie/forecasts/dublin")
 	soup = BeautifulSoup(page.content, "html.parser")
@@ -115,20 +125,19 @@ def tomorrow():
 	return f"**{title}**\n{description}"
 
 
-# links to articles
+#links to articles
 def news():
-	# news_string = "**Weather Related News:**\n"
 	news_list = []
 	page = requests.get("https://www.google.com/search?q=weather+ireland&rlz=1C1ONGR_en-GBIE979IE979&biw=1536&bih=842&tbm=nws&sxsrf=APq-WBsl_-eeWzTn7FGhUDdCzlFHF_pROg%3A1645226936889&ei=uCsQYubSNePA8gLQq7TABg&ved=0ahUKEwjmjpf5s4r2AhVjoFwKHdAVDWgQ4dUDCA0&uact=5&oq=weather+ireland&gs_lcp=Cgxnd3Mtd2l6LW5ld3MQAzIKCAAQsQMQgwEQQzILCAAQsQMQgwEQkQIyCwgAELEDEIMBEJECMgsIABCxAxCDARCRAjILCAAQgAQQsQMQgwEyCwgAEIAEELEDEIMBMgsIABCABBCxAxCDATIICAAQsQMQgwEyCwgAEIAEELEDEIMBMgsIABCABBCxAxCDAVAAWMwRYJwTaABwAHgAgAHSAYgBxQiSAQYxNC4wLjGYAQCgAQHAAQE&sclient=gws-wiz-news")
 
 	soup = BeautifulSoup(page.content, "html.parser")
 
-	# finds all classes with kCrYT
+	#finds all classes with kCrYT
 	for item in soup.find_all("div", attrs={"class" : "kCrYT"}):
-		# gets the links only
+		#gets the links only
 		raw_link = (item.find("a", href=True)["href"])
 
-		# removes evrything after &sa=U&, making the link useable
+		#removes evrything after &sa=U&, making the link useable
 		link = "<" + (raw_link.split("/url?q=")[1]).split("&sa=U&")[0] + ">"
 
 		news_list.append(link)
@@ -140,7 +149,7 @@ def jacket():
 	page = requests.get("https://doineedajacket.com/weather/dublin")
 	soup = BeautifulSoup(page.content, "html.parser")
 
-	# getting data
+	#getting data
 	jacket_ans = soup.select("h1")[0].text
 
 	if jacket_ans.lower() == "yes":
