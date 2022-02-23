@@ -1,0 +1,11 @@
+**-- WEATHER RELATED --**
+**!commands** - shows list of commands (this)
+**!weather** - shows a description of the current weather of Dublin
+**!tmr** - shows the weather for tomorrow in Dublin
+**!hourly** - shows the weather for the next 15 hours in Dublin
+**!news** - shows weather related articles in Ireland
+**!fact** - shows a fun weather fact
+**!gif** - shows a weather gif
+**!jacket** - says if you should wear a jacket or not
+**-- OTHER --**
+**!wordle** - Shows the wordle answer for today
