@@ -70,6 +70,15 @@ async def on_message(message):
 	elif msg.startswith("!hourly"):
 		await message.channel.send(commands.hourly())
 
+    #gets ip
+	elif msg.startswith("!ip"):
+		searching_ip = str(msg).split(" ")[1]
+		await message.channel.send(commands.ip(searching_ip))
+
+    #send tomorrow's weather
+	elif msg.startswith("!wordle"):
+		await message.channel.send(commands.wordle())
+
 	#send tomorrow's weather
 	elif msg.startswith("!news"):
 		#calling news function to get articles
