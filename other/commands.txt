@@ -9,3 +9,4 @@
 **!jacket** - says if you should wear a jacket or not
 **-- OTHER --**
 **!wordle** - Shows the wordle answer for today
+**!ip (enter IP)** - Shows info on entered IP
