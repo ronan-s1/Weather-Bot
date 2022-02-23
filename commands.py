@@ -6,7 +6,6 @@ import urllib.request
 from prettytable import PrettyTable
 from prettytable import SINGLE_BORDER
 
-
 #shows list of commands
 def commands():
     f = "other/commands.txt"
@@ -23,12 +22,13 @@ def commands():
         else:
             result += f"\n{command}\n"
 
-    return f"{result}"
+    return result
 
 
 #gets crypto chart
 def crypto(coin, compare):
-    url = "https://api.chart-img.com/v1/tradingview/advanced-chart?interval=1d&studies=RSI&studies=MACD&symbol=" + coin + compare + "&key" + api
+    api = os.environ["API"]
+    url = "https://api.chart-img.com/v1/tradingview/advanced-chart?interval=1d&studies=RSI&studies=MACD&symbol=" + coin + compare + "&key=" + api
     urllib.request.urlretrieve(url,"other/chart/chart.png")
 
 
