@@ -75,9 +75,18 @@ async def on_message(message):
 		searching_ip = str(msg).split(" ")[1]
 		await message.channel.send(commands.ip(searching_ip))
 
-    #send tomorrow's weather
+    #send todays wordle answer
 	elif msg.startswith("!wordle"):
 		await message.channel.send(commands.wordle())
+
+    #sends crypto chart
+	elif msg.startswith("!crypto"):
+		coin = str(msg).split(" ")[1]
+		compare = str(msg).split(" ")[2]
+		chart_location = "other/chart/chart.png"
+		commands.crypto(coin, compare)
+		await message.channel.send(file=discord.File(chart_location))
+		os.remove(chart_location)
 
 	#send tomorrow's weather
 	elif msg.startswith("!news"):
