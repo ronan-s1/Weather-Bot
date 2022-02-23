@@ -1,6 +1,8 @@
 import requests
 from bs4 import BeautifulSoup
 import random
+import os
+import urllib.request
 from prettytable import PrettyTable
 from prettytable import SINGLE_BORDER
 
@@ -15,15 +17,19 @@ def commands():
     
     result = ""
     for count, command in enumerate(commands_list):
-
         if command[2] == "!":
             result += f"**{count + 1})** {command}\n"
 
         else:
             result += f"\n{command}\n"
 
-    
     return f"{result}"
+
+
+#gets crypto chart
+def crypto(coin, compare):
+    url = "https://api.chart-img.com/v1/tradingview/advanced-chart?interval=1d&studies=RSI&studies=MACD&symbol=" + coin + compare + "&key" + api
+    urllib.request.urlretrieve(url,"other/chart/chart.png")
 
 
 #finds ip
