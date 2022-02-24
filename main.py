@@ -88,6 +88,14 @@ async def on_message(message):
 		await message.channel.send(file=discord.File(chart_location))
 		os.remove(chart_location)
 
+    #sends covid info
+	elif msg.startswith("!covid"):
+		country = str(msg).split(" ")[1]
+		covid_chart_location = "other/chart/covid.png"
+		commands.covid(country)
+		await message.channel.send(file=discord.File(covid_chart_location))
+		os.remove(covid_chart_location)
+
 	#send tomorrow's weather
 	elif msg.startswith("!news"):
 		#calling news function to get articles
