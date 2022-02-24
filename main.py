@@ -75,6 +75,10 @@ async def on_message(message):
 		searching_ip = str(msg).split(" ")[1]
 		await message.channel.send(commands.ip(searching_ip))
 
+    #sends advice
+	elif msg.startswith("!advice"):
+		await message.channel.send(commands.advice())
+
     #send todays wordle answer
 	elif msg.startswith("!wordle"):
 		await message.channel.send(commands.wordle())
@@ -95,8 +99,8 @@ async def on_message(message):
 		commands.covid(country)
 		await message.channel.send(file=discord.File(covid_chart_location))
 		os.remove(covid_chart_location)
-
-	#send tomorrow's weather
+    
+    #send tomorrow's weather
 	elif msg.startswith("!news"):
 		#calling news function to get articles
 		articles = commands.news()
