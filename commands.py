@@ -24,6 +24,11 @@ def commands():
 
     return result
 
+#sends advice
+def advice():
+    response = requests.get("https://api.adviceslip.com/advice").json()
+    return response["slip"]["advice"]
+
 
 def covid(country):
     url = "https://covid19.mathdro.id/api/countries/" + country + "/og"
