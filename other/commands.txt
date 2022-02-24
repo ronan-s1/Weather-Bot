@@ -9,4 +9,7 @@
 **!jacket** - says if you should wear a jacket or not
 **-- OTHER --**
 **!wordle** - Shows the wordle answer for today
-**!ip (enter IP)** - Shows info on entered IP
+**!ip (IP)** - Shows info on entered IP
+**!crypto (coin) (compare)** - shows a real-time chart of the two entered coins on a daily time frame (eg: !crypto BTC ETH)
+**!covid (country)** - shows information about covid for the entered country
+**!advice** - sends a piece of advice
