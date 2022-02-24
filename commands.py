@@ -25,11 +25,16 @@ def commands():
     return result
 
 
+def covid(country):
+    url = "https://covid19.mathdro.id/api/countries/" + country + "/og"
+    urllib.request.urlretrieve(url, "other/chart/covid.png")
+
+
 #gets crypto chart
 def crypto(coin, compare):
     api = os.environ["API"]
     url = "https://api.chart-img.com/v1/tradingview/advanced-chart?interval=1d&studies=RSI&studies=MACD&symbol=" + coin + compare + "&key=" + api
-    urllib.request.urlretrieve(url,"other/chart/chart.png")
+    urllib.request.urlretrieve(url, "other/chart/chart.png")
 
 
 #finds ip
