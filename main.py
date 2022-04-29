@@ -66,24 +66,24 @@ async def on_message(message):
 	elif msg.startswith("!jacket"):
 		await message.channel.send(commands.jacket())
 	
-    #send tomorrow's weather
+    	#send tomorrow's weather
 	elif msg.startswith("!hourly"):
 		await message.channel.send(commands.hourly())
 
-    #gets ip
+    	#gets ip
 	elif msg.startswith("!ip"):
 		searching_ip = str(msg).split(" ")[1]
 		await message.channel.send(commands.ip(searching_ip))
 
-    #sends advice
+    	#sends advice
 	elif msg.startswith("!advice"):
 		await message.channel.send(commands.advice())
 
-    #send todays wordle answer
+    	#send todays wordle answer
 	elif msg.startswith("!wordle"):
 		await message.channel.send(commands.wordle())
 
-    #sends crypto chart
+    	#sends crypto chart
 	elif msg.startswith("!crypto"):
 		coin = str(msg).split(" ")[1]
 		compare = str(msg).split(" ")[2]
@@ -92,7 +92,7 @@ async def on_message(message):
 		await message.channel.send(file=discord.File(chart_location))
 		os.remove(chart_location)
 
-    #sends covid info
+    	#sends covid info
 	elif msg.startswith("!covid"):
 		country = str(msg).split(" ")[1]
 		covid_chart_location = "other/chart/covid.png"
@@ -100,7 +100,7 @@ async def on_message(message):
 		await message.channel.send(file=discord.File(covid_chart_location))
 		os.remove(covid_chart_location)
     
-    #send tomorrow's weather
+    	#send tomorrow's weather
 	elif msg.startswith("!news"):
 		#calling news function to get articles
 		articles = commands.news()
@@ -126,7 +126,7 @@ async def on_message(message):
 
 				#user input
 				try:
-					user_msg = await client.wait_for("message", check=check, timeout = 15.0)
+					user_msg = await client.wait_for("message", check = check, timeout = 15.0)
 
 				#if user doesnt have any valid reply
 				except asyncio.TimeoutError: 
