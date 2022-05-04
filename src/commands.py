@@ -8,7 +8,7 @@ from prettytable import SINGLE_BORDER
 
 #shows list of commands
 def commands():
-    f = "other/commands.txt"
+    f = "data/commands.txt"
     my_file = open(f, "r")
     commands = my_file.read()
     commands_list = commands.split("\n")
@@ -32,14 +32,14 @@ def advice():
 
 def covid(country):
     url = "https://covid19.mathdro.id/api/countries/" + country + "/og"
-    urllib.request.urlretrieve(url, "other/chart/covid.png")
+    urllib.request.urlretrieve(url, "data/delete/covid.png")
 
 
 #gets crypto chart
 def crypto(coin, compare):
     api = os.environ["API"]
     url = "https://api.chart-img.com/v1/tradingview/advanced-chart?interval=1d&studies=RSI&studies=MACD&symbol=" + coin + compare + "&key=" + api
-    urllib.request.urlretrieve(url, "other/chart/chart.png")
+    urllib.request.urlretrieve(url, "data/delete/chart.png")
 
 
 #finds ip

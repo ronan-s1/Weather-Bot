@@ -2,7 +2,7 @@ import discord
 import os
 import asyncio
 import datetime
-import commands
+import src.commands as commands
 from keep_alive import keep_alive
 
 # --- discord side ---
@@ -36,8 +36,8 @@ async def on_ready():
 #if user does a command
 @client.event
 async def on_message(message):
-	facts_file = "other/facts.txt"
-	gifs_file = "other/gifs.txt"
+	facts_file = "data/facts.txt"
+	gifs_file = "data/gifs.txt"
 	msg = message.content.lower()
 	if message.author == client.user:
 		return
@@ -87,7 +87,7 @@ async def on_message(message):
 	elif msg.startswith("!crypto"):
 		coin = str(msg).split(" ")[1]
 		compare = str(msg).split(" ")[2]
-		chart_location = "other/chart/chart.png"
+		chart_location = "data/delete/chart.png"
 		commands.crypto(coin, compare)
 		await message.channel.send(file=discord.File(chart_location))
 		os.remove(chart_location)
@@ -95,7 +95,7 @@ async def on_message(message):
     	#sends covid info
 	elif msg.startswith("!covid"):
 		country = str(msg).split(" ")[1]
-		covid_chart_location = "other/chart/covid.png"
+		covid_chart_location = "data/delete/covid.png"
 		commands.covid(country)
 		await message.channel.send(file=discord.File(covid_chart_location))
 		os.remove(covid_chart_location)
