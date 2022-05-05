@@ -87,7 +87,7 @@ async def on_message(message):
 	elif msg.startswith("!crypto"):
 		coin = str(msg).split(" ")[1]
 		compare = str(msg).split(" ")[2]
-		chart_location = "data/delete/chart.png"
+		chart_location = "src/data/delete/chart.png"
 		commands.crypto(coin, compare)
 		await message.channel.send(file=discord.File(chart_location))
 		os.remove(chart_location)
