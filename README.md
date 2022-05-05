@@ -1,5 +1,6 @@
 # Weather-Bot
 A discord bot that shows the weather of the Dublin daily, and more!
+
 do !commands to see how it works
 
 ```
