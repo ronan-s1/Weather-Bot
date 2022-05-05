@@ -2,7 +2,7 @@ import discord
 import os
 import asyncio
 import datetime
-import src.commands as commands
+import commands as commands
 from keep_alive import keep_alive
 
 # --- discord side ---
