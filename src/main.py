@@ -36,8 +36,8 @@ async def on_ready():
 #if user does a command
 @client.event
 async def on_message(message):
-	facts_file = "data/facts.txt"
-	gifs_file = "data/gifs.txt"
+	facts_file = "src/data/facts.txt"
+	gifs_file = "src/data/gifs.txt"
 	msg = message.content.lower()
 	if message.author == client.user:
 		return
