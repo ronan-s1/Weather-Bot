@@ -95,7 +95,7 @@ async def on_message(message):
     	#sends covid info
 	elif msg.startswith("!covid"):
 		country = str(msg).split(" ")[1]
-		covid_chart_location = "data/delete/covid.png"
+		covid_chart_location = "src/data/delete/covid.png"
 		commands.covid(country)
 		await message.channel.send(file=discord.File(covid_chart_location))
 		os.remove(covid_chart_location)
