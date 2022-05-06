@@ -17,7 +17,7 @@ def commands():
     result = ""
     for count, command in enumerate(commands_list):
         if command[2] == "!":
-            result += f"**{count + 1})** {command}\n"
+            result += f"**{count})** {command}\n"
 
         else:
             result += f"\n{command}\n"
@@ -202,4 +202,8 @@ def jacket():
 		return_string += hours_later[i].text + "\n"
 
 	return return_string
-	
+
+
+def random_fact():
+    response = requests.get("https://uselessfacts.jsph.pl/random.json?language=en").json()
+    return response["text"]

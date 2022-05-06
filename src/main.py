@@ -83,6 +83,10 @@ async def on_message(message):
 	elif msg.startswith("!wordle"):
 		await message.channel.send(commands.wordle())
 
+    	#send a fact
+	elif msg.startswith("!random-fact"):
+		await message.channel.send(commands.random_fact())
+
     	#sends crypto chart
 	elif msg.startswith("!crypto"):
 		coin = str(msg).split(" ")[1]
