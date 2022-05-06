@@ -159,7 +159,7 @@ def tomorrow():
 			title = i.text
 			break
 
-	description = soup.select("p")[3 + count].text
+	description = soup.select("p")[5 + count].text
 
 	return f"**{title}**\n{description}"
 
