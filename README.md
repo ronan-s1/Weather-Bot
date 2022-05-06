@@ -3,7 +3,7 @@ A discord bot that shows the weather of the Dublin and much more.
 
 do !commands to see what it can do
 
-## How to your own Weather Bot
+## How to run your own Weather Bot
 1. Clone the repo
 2. Replace "TOKEN" in main.py with your own bot token
 3. Make sure you run the command below to get the correct libraries
