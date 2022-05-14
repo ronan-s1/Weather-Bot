@@ -71,7 +71,7 @@ def wordle():
     soup = BeautifulSoup(page.text, "html.parser")
 
     #getting correct string
-    string  =  soup.find_all("p")[2].text.split(" ")
+    string  =  soup.find_all("p")[10].text.split(" ")
     wordle = ""
     for i in range(len(string) - 1):
         wordle += string[i] + " "
