@@ -82,6 +82,23 @@ def wordle():
     return ans
 
 
+#displays worldle
+def worldle():
+    page = requests.get("https://www.gfinityesports.com/worldle/country/")
+    soup = BeautifulSoup(page.text, "html.parser")
+
+    #getting correct string
+    string  =  soup.find_all("p")[6].text.split(" ")
+    wordle = ""
+    for i in range(len(string) - 1):
+        wordle += string[i] + " "
+
+    #spoiler
+    ans =  wordle + "||" + str(string[-1]) + "||"
+
+    return ans
+
+    
 #displays hourly weather
 def hourly():
     #pretty table to display a pretty table :)

@@ -83,6 +83,10 @@ async def on_message(message):
 	elif msg.startswith("!wordle"):
 		await message.channel.send(commands.wordle())
 
+    	#send todays worldle answer
+	elif msg.startswith("!worldle"):
+		await message.channel.send(commands.worldle())
+
     	#send a fact
 	elif msg.startswith("!random-fact"):
 		await message.channel.send(commands.random_fact())
