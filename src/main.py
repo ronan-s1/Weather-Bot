@@ -53,7 +53,11 @@ async def on_message(message):
 	#shows fact
 	elif msg.startswith("!fact"):
 		await message.channel.send(commands.facts_and_gif(facts_file))
-	
+        
+	#bored
+	elif msg.startswith("!bored"):
+		await message.channel.send(commands.bored())
+        
 	#shows gif
 	elif msg.startswith("!gif"):
 		await message.channel.send(commands.facts_and_gif(gifs_file))

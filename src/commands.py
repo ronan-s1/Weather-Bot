@@ -30,6 +30,11 @@ def advice():
     return response["slip"]["advice"]
 
 
+def bored():
+    response = requests.get("https://www.boredapi.com/api/activity").json()
+    return response["activity"]
+
+
 def covid(country):
     url = "https://covid19.mathdro.id/api/countries/" + country + "/og"
     urllib.request.urlretrieve(url, "src/data/delete/covid.png")

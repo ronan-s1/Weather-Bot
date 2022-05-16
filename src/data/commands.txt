@@ -14,4 +14,5 @@
 **!crypto (coin) (compare)** - shows a real-time chart of the two entered coins on a daily time frame (eg: !crypto BTC ETH)
 **!covid (country)** - shows information about covid for the entered country
 **!advice** - sends a piece of advice
+**!bored** - bored?
 **!random-fact** - sends a random useless fact
