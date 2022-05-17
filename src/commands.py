@@ -91,15 +91,21 @@ def wordle():
 def worldle():
     page = requests.get("https://www.gfinityesports.com/worldle/country/")
     soup = BeautifulSoup(page.text, "html.parser")
-
+    
     #getting correct string
     string  =  soup.find_all("p")[6].text.split(" ")
     wordle = ""
+    after_is = 0
+    
     for i in range(len(string) - 1):
         wordle += string[i] + " "
+        after_is += 1
+
+        if string[i] == "is":
+            break
 
     #spoiler
-    ans =  wordle + "||" + str(string[-1]) + "||"
+    ans =  wordle + "||" + " ".join(map(str, string[after_is:])) + "||"
 
     return ans
 
