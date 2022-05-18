@@ -47,6 +47,12 @@ def crypto(coin, compare):
     urllib.request.urlretrieve(url, "src/data/delete/chart.png")
 
 
+#shortens a link
+def shorten(link):
+    response = requests.get("https://short-link-api.vercel.app/?query=" + link).json()
+    return "<" + response["chilp.it"] + ">"
+    
+    
 #finds ip
 def ip(ip):
     #gets infor of ip

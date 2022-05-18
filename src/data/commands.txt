@@ -16,3 +16,4 @@
 **!advice** - sends a piece of advice
 **!bored** - bored?
 **!random-fact** - sends a random useless fact
+**!shorten (url)** - shortens a url
