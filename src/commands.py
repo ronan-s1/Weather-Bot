@@ -178,7 +178,7 @@ def getting_weather():
 	soup = BeautifulSoup(page.content, "html.parser")
 
 	title = soup.select("h2")[0].text
-	description = soup.select("p")[3].text
+	description = soup.select("p")[2].text
 
 	return f"**{title}**\n{description}"
 
@@ -193,7 +193,7 @@ def tomorrow():
 			title = i.text
 			break
 
-	description = soup.select("p")[5 + count].text
+	description = soup.select("p")[4 + count].text
 
 	return f"**{title}**\n{description}"
 
